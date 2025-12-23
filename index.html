@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microsoft Office Guide | boywithalo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f0518;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --accent: #ffc107;
+            /* Gold accent for premium feel */
+            --accent-hover: #ffca2c;
+            --code-bg: rgba(0, 0, 0, 0.3);
+            --success: #4caf50;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-color);
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(255, 193, 7, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(79, 195, 247, 0.05) 0%, transparent 40%);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 1rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: var(--glass-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .card:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 1rem;
+        }
+
+        .step-icon {
+            font-size: 1.8rem;
+            background: rgba(255, 255, 255, 0.1);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            color: var(--accent);
+        }
+
+        h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* Links & Buttons */
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .download-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            -webkit-user-select: text;
+            /* Allow selection if needed, but usually click */
+            user-select: none;
+        }
+
+        .download-btn:hover {
+            background: var(--accent);
+            color: #000;
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+        }
+
+        .download-btn span {
+            margin-left: 0.5rem;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: var(--code-bg);
+            border-radius: 12px;
+            padding: 1.2rem;
+            font-family: 'Monaco', 'Consolas', monospace;
+            color: #4fc3f7;
+            margin: 1rem 0;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-text {
+            -webkit-user-select: text;
+            user-select: text;
+            word-break: break-all;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            margin-left: 1rem;
+            flex-shrink: 0;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent);
+            color: #000;
+        }
+
+        /* Lists */
+        ol,
+        ul {
+            margin-left: 1.5rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        strong {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* Separator Link */
+        .separator-link {
+            display: block;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            opacity: 0.5;
+            margin: 2rem 0;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .separator-link:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer-note {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+        }
+
+        .tip-box {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .tip-icon {
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .download-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>Спасибо за покупку!</h1>
+            <p class="subtitle">Ниже — подробная пошаговая инструкция по установке и активации Microsoft Office.</p>
+            <a href="https://playerok.com/profile/boywithalo/products"
+                class="separator-link">playerok.com/profile/boywithalo/products</a>
+        </header>
+
+        <!-- Step 1: Installation -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-icon">⚙️</div>
+                <h2>1. Установка Microsoft Office</h2>
+            </div>
+            <p style="margin-bottom: 1rem; color: var(--text-muted);">Если Office уже установлен — переходите сразу к <a
+                    href="#activation" style="color: var(--accent); text-decoration: none;">шагу 2</a>.<br>Если нет —
+                выберите нужную версию и скачайте установщик:</p>
+
+            <div class="download-grid">
+                <a href="https://cutt.ly/o365-playerok-boywithalo" target="_blank" class="download-btn">
+                    Office 365 <span>⬇️</span>
+                </a>
+                <a href="https://cutt.ly/2024-playerok-boywithalo" target="_blank" class="download-btn">
+                    Office 2024 <span>⬇️</span>
+                </a>
+                <a href="https://cutt.ly/2021-playerok-boywithalo" target="_blank" class="download-btn">
+                    Office 2021 <span>⬇️</span>
+                </a>
+            </div>
+
+            <p style="margin-top: 1.5rem; margin-bottom: 0.5rem; color: #fff;">После загрузки:</p>
+            <ol>
+                <li>Запустите файл установки.</li>
+                <li>Дождитесь окончания установки Office.</li>
+            </ol>
+        </div>
+
+        <a href="https://playerok.com/profile/boywithalo/products"
+            class="separator-link">playerok.com/profile/boywithalo/products</a>
+
+        <!-- Step 2: Activation -->
+        <div class="card" id="activation">
+            <div class="card-header">
+                <div class="step-icon">🔑</div>
+                <h2>2. Активация лицензии</h2>
+            </div>
+            <ol>
+                <li>Нажмите <strong>Win + S</strong> и введите <strong>PowerShell</strong>.</li>
+                <li>Кликните <strong>правой кнопкой мыши</strong> по PowerShell и выберите <span
+                        style="color: var(--accent);">«Запуск от имени администратора»</span>.</li>
+                <li>В открывшемся окне вставьте команду:</li>
+            </ol>
+
+            <div class="code-block">
+                <span class="code-text" id="cmd">irm https://get.activated.win | iex</span>
+                <button class="copy-btn" onclick="copyToClipboard('cmd')">Копировать</button>
+            </div>
+
+            <ol start="4">
+                <li>После появления меню выберите <strong>пункт 2, и в новом окошке 1</strong> (нажмите цифру 2 на клавиатуре).</li>
+                <li>Дождитесь окончания активации.</li>
+                <li>Готово — Office активирован! 🎉</li>
+            </ol>
+
+            <div class="tip-box">
+                <div class="tip-icon">💡</div>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Совет: после активации перезагрузите компьютер,
+                    чтобы изменения вступили в силу.</p>
+            </div>
+        </div>
+
+        <a href="https://playerok.com/profile/boywithalo/products"
+            class="separator-link">playerok.com/profile/boywithalo/products</a>
+
+        <!-- Support -->
+        <div class="card" style="text-align: center;">
+            <div style="font-size: 2rem; margin-bottom: 1rem;">💬</div>
+            <h2>Нужна помощь?</h2>
+            <p style="color: var(--text-muted); margin-top: 0.5rem;">Если возникнут вопросы — обращайтесь, помогу на
+                любом этапе установки или активации.</p>
+        </div>
+
+        <footer class="footer-note">
+            <p>© boywithalo | <a href="https://playerok.com/profile/boywithalo/products"
+                    style="color: var(--text-muted); text-decoration: none;">Все товары</a></p>
+        </footer>
+    </div>
+
+    <script>
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = event.target;
+                const originalText = btn.innerText;
+                btn.innerText = 'Скопировано!';
+                btn.style.background = '#4caf50';
+                btn.style.color = '#fff';
+
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.background = '';
+                    btn.style.color = '';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+        // Basic Protection (Optional, keeps casual users from messing up)
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        document.addEventListener('keydown', function (e) {
+            // Prevent F12, Ctrl+Shift+I, Ctrl+U
+            if (e.keyCode == 123 ||
+                (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 67 || e.keyCode == 74)) ||
+                (e.ctrlKey && e.keyCode == 85)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
+</body>
+
+</html>
