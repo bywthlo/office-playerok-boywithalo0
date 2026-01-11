@@ -281,6 +281,74 @@
             font-size: 1.2rem;
         }
 
+        /* Expandable Video Section */
+        .expandable-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--glass-shadow);
+            animation: fadeInUp 0.8s ease-out;
+            animation-delay: 0.05s;
+            animation-fill-mode: both;
+        }
+
+        .expandable-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            user-select: none;
+        }
+
+        .expandable-header:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .expandable-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .expand-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            color: var(--accent);
+        }
+
+        .expandable-section.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+
+        .expandable-section.expanded .expandable-content {
+            max-height: 2000px;
+        }
+
+        .video-container {
+            padding: 0 2rem 2rem 2rem;
+        }
+
+        .video-container video {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
         /* Animations */
         @keyframes fadeInDown {
             from {
@@ -333,6 +401,26 @@
                 class="separator-link">playerok.com/profile/boywithalo/products</a>
         </header>
 
+        <!-- Video Guide Section -->
+        <div class="expandable-section" id="videoSection">
+            <div class="expandable-header" onclick="toggleVideoSection()">
+                <div class="expandable-title">
+                    <span>🎥</span>
+                    <span>Видео-гайд</span>
+                </div>
+                <span class="expand-icon">▼</span>
+            </div>
+            <div class="expandable-content">
+                <div class="video-container">
+                    <video controls>
+                        <source src="video.mov" type="video/quicktime">
+                        <source src="video.mov" type="video/mp4">
+                        Ваш браузер не поддерживает воспроизведение видео.
+                    </video>
+                </div>
+            </div>
+        </div>
+
         <!-- Step 1: Installation -->
         <div class="card">
             <div class="card-header">
@@ -384,7 +472,8 @@
             </div>
 
             <ol start="4">
-                <li>После появления меню выберите <strong>пункт 2, и в новом окошке 1</strong> (нажмите цифру 2 на клавиатуре).</li>
+                <li>После появления меню выберите <strong>пункт 2, и в новом окошке 1</strong> (нажмите цифру 2 на
+                    клавиатуре).</li>
                 <li>Дождитесь окончания активации.</li>
                 <li>Готово — Office активирован! 🎉</li>
             </ol>
@@ -414,6 +503,11 @@
     </div>
 
     <script>
+        function toggleVideoSection() {
+            const section = document.getElementById('videoSection');
+            section.classList.toggle('expanded');
+        }
+
         function copyToClipboard(elementId) {
             const text = document.getElementById(elementId).innerText;
             navigator.clipboard.writeText(text).then(() => {
@@ -436,12 +530,29 @@
         // Basic Protection (Optional, keeps casual users from messing up)
         document.addEventListener('contextmenu', event => event.preventDefault());
 
+        // Advanced Anti-Inspect Measures
+
+        // 2. Trigger Error on Forbidden Actions
+        const nukeContent = () => {
+            if (document.body.innerText.includes('Error: Not Authorized')) return;
+            document.body.innerHTML = `
+                <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;height:100vh;background:#0f0518;color:#ff4444;font-family:'Inter',sans-serif;text-align:center;padding:2rem;">
+                    <div style="font-size:4rem;margin-bottom:1rem;">🚫</div>
+                    <h1 style="font-size:2.5rem;margin-bottom:1rem;">Error: Not Authorized</h1>
+                    <p style="color:#a0a0a0;font-size:1.2rem;">Developer tools are not allowed on this page.</p>
+                    <button onclick="window.location.reload()" style="margin-top:2rem;padding:0.8rem 2rem;background:#ff4444;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;">Reload Page</button>
+                </div>
+            `;
+        };
+
         document.addEventListener('keydown', function (e) {
-            // Prevent F12, Ctrl+Shift+I, Ctrl+U
-            if (e.keyCode == 123 ||
-                (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 67 || e.keyCode == 74)) ||
-                (e.ctrlKey && e.keyCode == 85)) {
+            // Prevent F12, Ctrl+Shift+I, Ctrl+U, Ctrl+Shift+C, Ctrl+S
+            if (e.keyCode == 123 || // F12
+                (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 67 || e.keyCode == 74)) || // Ctrl+Shift+I/C/J
+                (e.ctrlKey && e.keyCode == 85) || // Ctrl+U
+                (e.ctrlKey && e.keyCode == 83)) { // Ctrl+S
                 e.preventDefault();
+                nukeContent(); // Show error screen on attempt
                 return false;
             }
         });
